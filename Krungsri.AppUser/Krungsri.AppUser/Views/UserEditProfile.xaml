@@ -6,19 +6,19 @@
              mc:Ignorable="d"
              NavigationPage.HasNavigationBar="False"
              xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
-             x:Class="Krungsri.AppUser.Views.UserProfile">
+             x:Class="Krungsri.AppUser.Views.UserEditProfile">
     <ContentPage.Content>
-        <StackLayout>   
+        <StackLayout>
             <Grid Margin="0,30,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-              <Image Source="Back" HorizontalOptions="Start" HeightRequest="40" Margin="10,-30,0,0" Grid.Row="0"/>
-                <Label Text="โปรไฟล์" TextColor="Black" FontSize="20" FontAttributes="Bold"
+                <Image Source="Back" HorizontalOptions="Start" HeightRequest="40" Margin="10,-30,0,0" Grid.Row="0"/>
+                <Label Text="แก้ไขโปรไฟล์" TextColor="Black" FontSize="20" FontAttributes="Bold"
                        HorizontalTextAlignment="Center" Grid.Row="0"/>
                 <StackLayout Grid.Row="1">
-                <Frame HasShadow="True" Margin="20,5" Padding="0">
+                    <Frame HasShadow="True" Margin="20,5" Padding="0">
                         <StackLayout>
                             <Label Text="ชื่อจริง" Margin="10" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
                             <Entry Placeholder="tohot" Margin="50,0" HorizontalOptions="FillAndExpand" HeightRequest="40"/>
@@ -39,12 +39,12 @@
                     <Frame HasShadow="True" Margin="20,5" Padding="0">
                         <StackLayout>
                             <Label Text="เพศ" Margin="10" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
-                            
-                                <input:RadioButtonGroupView Orientation="Horizontal">
-                                    <input:RadioButton Text="ชาย" TextFontSize="15" HorizontalOptions="StartAndExpand" Margin="50,10" Color="Black" />
-                                    <input:RadioButton Text="หญิง" TextFontSize="15" HorizontalOptions="End" Margin="50,10" Color="Black" />                                    
-                                </input:RadioButtonGroupView>
-                            
+
+                            <input:RadioButtonGroupView Orientation="Horizontal">
+                                <input:RadioButton Text="ชาย" TextFontSize="15" HorizontalOptions="StartAndExpand" Margin="50,10" />
+                                <input:RadioButton Text="หญิง" TextFontSize="15" HorizontalOptions="End" Margin="50,10" />
+                            </input:RadioButtonGroupView>
+
                         </StackLayout>
                     </Frame>
                     <Frame HasShadow="True" Margin="20,5" Padding="0">
@@ -52,11 +52,11 @@
                             <Label Text="อีเมล์" Margin="10" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
                             <Entry Placeholder="tohot" Margin="50,0" HorizontalOptions="FillAndExpand" HeightRequest="40"/>
                         </StackLayout>
-                    </Frame>                    
-                </StackLayout>                
+                    </Frame>
+                </StackLayout>
             </Grid>
             <Button VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" FontSize="20" FontAttributes="Bold"
-                            Margin="30,15" Text="แก้ไข" TextColor="White" BackgroundColor="#EAA200" CornerRadius="5" />
+                            Margin="30,15" Text="บันทึก" TextColor="White" BackgroundColor="#EAA200" CornerRadius="5" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
