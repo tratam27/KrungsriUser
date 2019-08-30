@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="Krungsri.AppUser.Views.UserHome">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="330"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" BackgroundColor="Purple">
+                <Label Text="ยินดีต้อนรับ ดำรงเดช" FontSize="20" TextColor="White"/>
+                <Grid VerticalOptions="EndAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="240"/>                        
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="52"/>
+                    </Grid.ColumnDefinitions>
+                    <BoxView BackgroundColor="Black" Opacity="0.3" Grid.ColumnSpan="3" HeightRequest="80"/>
+                    <Label Text="ยอดเงินคงเหลือ" TextColor="White"
+                           FontAttributes="Bold" Grid.Column="0"
+                           FontSize="20"
+                           VerticalOptions="CenterAndExpand" Margin="20,0,0,0"/>
+                    <Label Text="3,800.50"
+                           Grid.Column="1"
+                           TextColor="#EAA200"
+                           VerticalOptions="CenterAndExpand"
+                           FontSize="25"/>
+                    <Label Text="THB"
+                           TextColor="#EAA200"
+                           FontSize="13"
+                           Grid.Column="2"
+                           HorizontalTextAlignment="Start"
+                           VerticalTextAlignment="Center" Margin="0,-5,0,0"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1" BackgroundColor="#FFFFFF">
+                <Frame BackgroundColor="White" Grid.Column="0" Grid.Row="0" CornerRadius="10" HeightRequest="135"
+                       VerticalOptions="Center" WidthRequest="135" HorizontalOptions="Center" HasShadow="True">
+                    <StackLayout>
+                        <Image Source="qricon" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                        <Label Text="แสกนจ่าย" TextColor="#9FA2A4" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="White" Grid.Column="1" Grid.Row="0" CornerRadius="10" HeightRequest="135"
+                       VerticalOptions="Center" WidthRequest="135" HorizontalOptions="Center" HasShadow="True">
+                    <StackLayout>
+                        <Image Source="phoneicon" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                        <Label Text="เติมเงิน" TextColor="#9FA2A4" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="White" Grid.Column="0" Grid.Row="1" CornerRadius="10" HeightRequest="135"
+                       VerticalOptions="Center" WidthRequest="135" HorizontalOptions="Center" HasShadow="True">
+                    <StackLayout>
+                        <Image Source="phoneicon" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                        <Label Text="Coming Soon" TextColor="#9FA2A4" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="White" Grid.Column="1" Grid.Row="1" CornerRadius="10" HeightRequest="135"
+                       VerticalOptions="Center" WidthRequest="135" HorizontalOptions="Center" HasShadow="True">
+                    <StackLayout>
+                        <Image Source="phoneicon" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                        <Label Text="Coming Soon" TextColor="#9FA2A4" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

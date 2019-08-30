@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#E6E6E6"
+             x:Class="Krungsri.AppUser.Views.UserMenu">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid BackgroundColor="Purple" HeightRequest="240">
+                <StackLayout>
+                <Frame CornerRadius="50" BackgroundColor="White" Padding="0" Margin="0,25"
+                       HeightRequest="70" WidthRequest="70" HorizontalOptions="Center">
+                    <Image Source="AccountOrange" Aspect="AspectFit" VerticalOptions="Center"
+                           HeightRequest="40" WidthRequest="40" HorizontalOptions="Center"/>
+                </Frame>
+                    <Label Text="dumrongdech" TextColor="White" HorizontalOptions="Center"/>
+                    <Label Text="097-639xxxx" TextColor="White" HorizontalOptions="Center"/>
+                    <Label Text="Email@dress" TextColor="White" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Grid>
+            <StackLayout Margin="0,40,0,0" BackgroundColor="White">
+                <Grid HeightRequest="60">
+                    <Label Text="โปรไฟล์" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start"
+                           Margin="30,0,0,0" VerticalOptions="Center" TextColor="Black"/>
+                    <Image Source="Next" HorizontalOptions="EndAndExpand" VerticalOptions="Center"
+                           HeightRequest="35" Margin="0,0,15,0"/>
+                    <BoxView BackgroundColor="#DEDEDE" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="End"/>
+                </Grid >
+                <Grid HeightRequest="60">
+                    <Label Text="ตั้งค่า" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start"
+                           Margin="30,0,0,0" VerticalOptions="Center" TextColor="Black"/>
+                    <Image Source="Next" HorizontalOptions="EndAndExpand" VerticalOptions="Center"
+                           HeightRequest="35" Margin="0,0,15,0"/>
+                    <BoxView BackgroundColor="#DEDEDE" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="End"/>
+                </Grid>
+                <Grid HeightRequest="60">
+                    <Label Text="ออกจากระบบ" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start"
+                           Margin="30,0,0,0" VerticalOptions="Center" TextColor="Black"/>                    
+                </Grid>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+            BarBackgroundColor="White"
+            NavigationPage.HasNavigationBar="False"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"            
+            android:TabbedPage.BarItemColor="LightGray"
+            android:TabbedPage.BarSelectedItemColor="#EAA200"
+            xmlns:local="clr-namespace:Krungsri.AppUser.Views;assembly=Krungsri.AppUser"
+             x:Class="Krungsri.AppUser.Views.MotherTabbed">
+    <TabbedPage.Children>
+        <local:UserHome IconImageSource="HomeTabbed"/>
+        <local:UserHistory IconImageSource="HistoryTabbed"/>
+        <local:UserMenu IconImageSource="AccountTabbed"/>
+    </TabbedPage.Children>
+</TabbedPage>
