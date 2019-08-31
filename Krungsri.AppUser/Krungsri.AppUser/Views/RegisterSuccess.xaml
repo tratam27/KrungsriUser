@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              BackgroundColor="#FFFFFF"
+             NavigationPage.HasNavigationBar="False"
              x:Class="Krungsri.AppUser.Views.RegisterSuccess">
     <ContentPage.Content>
         <Grid>

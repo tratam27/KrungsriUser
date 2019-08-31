@@ -12,9 +12,10 @@ namespace Krungsri.AppUser
             InitializeComponent();
 
             //MainPage = new NavigationPage(new EnterPin());
-            MainPage = new NavigationPage(new UserLogin());
+            //MainPage = new NavigationPage(new UserLogin());
             //MainPage = new NavigationPage(new MotherTabbed());
             //MainPage = new NavigationPage(new UserProfile());
+            MainPage = new NavigationPage(new Register());
         }
 
         protected override void OnStart()
