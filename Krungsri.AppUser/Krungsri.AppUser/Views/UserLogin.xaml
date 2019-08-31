@@ -5,8 +5,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              BackgroundImageSource="LoginBG"
+             xmlns:bd="clr-namespace:Krungsri.AppUser.ViewModels"
              NavigationPage.HasNavigationBar="False"
              x:Class="Krungsri.AppUser.Views.UserLogin">
+    <ContentPage.BindingContext>
+        <bd:PinViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <Grid>            
             <Grid BackgroundColor="Transparent">
@@ -28,7 +32,8 @@
                        PlaceholderColor="LightGray"
                        HorizontalOptions="FillAndExpand"
                        HeightRequest="50"
-                       Margin="20,0,0,0"/>
+                       Margin="20,0,0,0"
+                       Text="{Binding Email}"/>
             </Frame>
             <Frame BackgroundColor="#EAA200"
                    Margin="60,5"
@@ -40,6 +45,7 @@
                 <Button Text="SIGN IN"
                         TextColor="White"
                         FontSize="20"
+                        Command="{Binding SignIn}"
                         BackgroundColor="#EAA200"
                         HeightRequest="50"
                         HorizontalOptions="FillAndExpand"/>

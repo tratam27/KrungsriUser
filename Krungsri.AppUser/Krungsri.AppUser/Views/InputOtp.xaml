@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:bd="clr-namespace:Krungsri.AppUser.ViewModels"
+             BackgroundColor="#FFFFFF"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="Krungsri.AppUser.Views.InputOtp">
+    <ContentPage.BindingContext>
+        <bd:PinViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <Image Source="Email" HorizontalOptions="Center"
+                   Margin="0,110,0,10"
+                   HeightRequest="50"                   
+                   Aspect="AspectFill"/>
+            <Label Text="กรุณาใส่ OTP"
+                   HorizontalOptions="Center"
+                   TextColor="Black"/>
+            <Label Text="เพื่อยืนยัน email ของคุณ"
+                   HorizontalOptions="Center"
+                   TextColor="Black"/>
+            <Label Text="เราได้ส่ง OTP ไปที่ email ของคุณแล้ว"
+                   HorizontalOptions="Center"/>
+            <Label Text="{Binding Reference,StringFormat='ref. {0}'}"
+                   HorizontalOptions="Center"/>
+            <Grid Margin="70,20" HorizontalOptions="CenterAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+                <Frame Grid.Column="0" CornerRadius="32" BorderColor="Black"
+                       BackgroundColor="{Binding CircleBg1}" Padding="0" HeightRequest="25" WidthRequest="25"
+                       HorizontalOptions="Center"
+                       HasShadow="False"/>
+                <Frame Grid.Column="1" CornerRadius="32" BorderColor="Black"
+                       BackgroundColor="{Binding CircleBg2}" Padding="0" HeightRequest="25" WidthRequest="25"
+                       HorizontalOptions="Center"
+                       HasShadow="False"/>
+                <Frame Grid.Column="2" CornerRadius="32" BorderColor="Black"
+                       BackgroundColor="{Binding CircleBg3}" Padding="0" HeightRequest="25" WidthRequest="25"
+                       HorizontalOptions="Center"
+                       HasShadow="False"/>
+                <Frame Grid.Column="3" CornerRadius="32" BorderColor="Black"
+                       BackgroundColor="{Binding CircleBg4}" Padding="0" HeightRequest="25" WidthRequest="25"
+                       HorizontalOptions="Center"
+                       HasShadow="False"/>
+                <Frame Grid.Column="4" CornerRadius="32" BorderColor="Black"
+                       BackgroundColor="{Binding CircleBg5}" Padding="0" HeightRequest="25" WidthRequest="25"
+                       HorizontalOptions="Center"
+                       HasShadow="False"/>
+                <Frame Grid.Column="5" CornerRadius="32" BorderColor="Black"
+                       BackgroundColor="{Binding CircleBg6}" Padding="0" HeightRequest="25" WidthRequest="25"
+                       HorizontalOptions="Center"
+                       HasShadow="False"/>
+
+            </Grid>
+            <Label Text="ส่ง OTP อีกครั้ง"
+                   HorizontalOptions="Center"
+                   TextColor="#EAA200">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SendOtpCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Text="OTP ไม่ถูกต้อง" TextColor="{Binding InvalidMessageColor}"
+                   HorizontalOptions="CenterAndExpand" FontSize="15"/>
+            <Grid BackgroundColor="#EAA200" VerticalOptions="EndAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0" Grid.Column="0" BackgroundColor="#EAA200"
+                        TextColor="#FFFFFF"
+                        Text="1"
+                        FontSize="20"
+                        Command="{Binding EnterNo1}"/>
+                <Button Grid.Row="0" Grid.Column="1" BackgroundColor="#EAA200"
+                        TextColor="#FFFFFF"
+                        Text="2"
+                        FontSize="20"
+                        Command="{Binding EnterNo2}"/>
+                <Button Grid.Row="0" Grid.Column="2" BackgroundColor="#EAA200"
+                        TextColor="#FFFFFF"
+                        Text="3"
+                        FontSize="20"
+                        Command="{Binding EnterNo3}"/>
+                <Button Grid.Row="1" Grid.Column="0" BackgroundColor="#EAA200"
+                        TextColor="#FFFFFF"
+                        Text="4"
+                        FontSize="20"
+                        Command="{Binding EnterNo4}"/>
+                <Button Grid.Row="1" Grid.Column="1" BackgroundColor="#EAA200"
+                        TextColor="#FFFFFF"
+                        Text="5"
+                        FontSize="20"
+                        Command="{Binding EnterNo5}"/>
+                <Button Grid.Row="1" Grid.Column="2" BackgroundColor="#EAA200"
+                        TextColor="#FFFFFF"
+                        Text="6"
+                        FontSize="20"
+                        Command="{Binding EnterNo6}"/>
+                <Button Grid.Row="2" Grid.Column="0" BackgroundColor="#EAA200"
+                        TextColor="#FFFFFF"
+                        Text="7"
+                        FontSize="20"
+                        Command="{Binding EnterNo7}"/>
+                <Button Grid.Row="2" Grid.Column="1" BackgroundColor="#EAA200"
+                        TextColor="#FFFFFF"
+                        Text="8"
+                        FontSize="20"
+                        Command="{Binding EnterNo8}"/>
+                <Button Grid.Row="2" Grid.Column="2" BackgroundColor="#EAA200"
+                        TextColor="#FFFFFF"
+                        Text="9"
+                        FontSize="20"
+                        Command="{Binding EnterNo9}"/>                
+                <Button Grid.Row="3" Grid.Column="1" BackgroundColor="#EAA200"
+                        TextColor="#FFFFFF"
+                        Text="0"
+                        FontSize="20"
+                        Command="{Binding EnterNo0}"/>
+                <Button Grid.Row="3" Grid.Column="2" BackgroundColor="#EAA200"
+                        ImageSource="Delete"
+                        Command="{Binding DeleteNumber}"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
