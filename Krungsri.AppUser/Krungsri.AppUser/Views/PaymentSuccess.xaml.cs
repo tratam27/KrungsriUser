@@ -1,5 +1,4 @@
-﻿using Krungsri.AppUser.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,12 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace Krungsri.AppUser.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RegisterSuccess : ContentPage
+    public partial class PaymentSuccess : Rg.Plugins.Popup.Pages.PopupPage
     {
-        public RegisterSuccess()
+        public PaymentSuccess()
         {
             InitializeComponent();
-            BindingContext = new PinViewModel();
         }
     }
 }

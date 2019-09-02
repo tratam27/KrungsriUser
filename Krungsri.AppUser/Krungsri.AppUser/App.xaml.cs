@@ -1,5 +1,7 @@
-﻿using Krungsri.AppUser.Views;
+﻿using Android.Preferences;
+using Krungsri.AppUser.Views;
 using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,14 +14,15 @@ namespace Krungsri.AppUser
             InitializeComponent();
 
             //MainPage = new NavigationPage(new EnterPin());
-            //MainPage = new NavigationPage(new UserLogin());
+            MainPage = new NavigationPage(new UserLogin());
             //MainPage = new NavigationPage(new MotherTabbed());
             //MainPage = new NavigationPage(new UserProfile());
-            MainPage = new NavigationPage(new Register());
+            //MainPage = new NavigationPage(new Register());
         }
 
         protected override void OnStart()
         {
+            Preferences.Clear();
             // Handle when your app starts
         }
 

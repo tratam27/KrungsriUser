@@ -7,7 +7,7 @@
              NavigationPage.HasNavigationBar="False"
              xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-             x:Class="Krungsri.AppUser.Views.ProfileEditedPopup">
+             x:Class="Krungsri.AppUser.Views.ForgotPassPopup">
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation 
             PositionIn="Center"
@@ -26,12 +26,24 @@
                    VerticalOptions="Center"                   
                    HorizontalOptions="FillAndExpand"
                    Margin="20,0"
-                   HeightRequest="250">
+                   HeightRequest="350">
             <StackLayout>
-                <Image Source="CorrectPopup" HorizontalOptions="CenterAndExpand" Margin="0,30"/>
-                <Label Text="บันทึกสำเร็จ" TextColor="Black" HorizontalOptions="CenterAndExpand" FontSize="20"/>
-                <Button BackgroundColor="#EAA200" TextColor="White" Text="ตกลง" HorizontalOptions="FillAndExpand"
-                        CornerRadius="5" VerticalOptions="EndAndExpand" FontSize="22"/>
+                <Frame Padding="0" BackgroundColor="#FFFFFF" VerticalOptions="Start" HorizontalOptions="FillAndExpand"
+                       HasShadow="True">
+                    <StackLayout>
+                        <Label Text="อีเมล์" HorizontalOptions="Start" VerticalOptions="Start"/>
+                        <Entry Placeholder="email" HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                </Frame>
+                <Frame Padding="0" BackgroundColor="#FFFFFF" VerticalOptions="Start" HorizontalOptions="FillAndExpand"
+                       HasShadow="True">
+                    <StackLayout>
+                        <Label Text="วันเดือนปี" HorizontalOptions="Start" VerticalOptions="Start"/>
+                        <Entry Placeholder="email" HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                </Frame>
+                <Button BackgroundColor="#EAA200" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" Text="ถัดไป" FontSize="20" TextColor="White"/>
+                <Button BackgroundColor="Gray" HorizontalOptions="FillAndExpand" Text="ยกเลิก" TextColor="White" FontSize="20"/>
             </StackLayout>
         </Frame>
     </StackLayout>

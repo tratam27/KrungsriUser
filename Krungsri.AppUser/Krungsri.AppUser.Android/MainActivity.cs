@@ -24,6 +24,8 @@ namespace Krungsri.AppUser.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            ZXing.Mobile.MobileBarcodeScanner.Initialize(Application);
+            Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             CrossFingerprint.SetDialogFragmentType<MyCustomDialogFragment>();
             CrossFingerprint.SetCurrentActivityResolver(() => CrossCurrentActivity.Current.Activity);
             LoadApplication(new App());

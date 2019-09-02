@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"                
+             x:Class="Krungsri.AppUser.Views.TopUpPopup">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="0.8"
+            ScaleOut="0.8"
+            DurationIn="200"
+            DurationOut="200"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <StackLayout VerticalOptions="CenterAndExpand">
+        <Frame BackgroundColor="White"
+                   CornerRadius="10"
+                   VerticalOptions="Center"                   
+                   HorizontalOptions="FillAndExpand"
+                   Margin="20,0"
+                   HeightRequest="350">
+            <StackLayout>
+                <Label Text="Top Up (THB)" HorizontalOptions="CenterAndExpand" FontSize="18"/>
+                <Label Text="{Binding TopUpMoney,StringFormat='{0}.00'}" FontSize="45" HorizontalOptions="FillAndExpand"
+                       HorizontalTextAlignment="Center"/>                
+                <BoxView BackgroundColor="Black" HeightRequest="1"/>
+                <Grid Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Column="0">
+                        <Frame CornerRadius="50" BackgroundColor="White" Padding="0" Margin="0,10"
+                       HeightRequest="70" WidthRequest="70" HorizontalOptions="Center" Grid.Column="2">
+                            <Image Source="Wallet" Aspect="AspectFit" VerticalOptions="Center"
+                           HeightRequest="40" WidthRequest="40" HorizontalOptions="Center"/>
+                        </Frame>
+                        <Label Text="{Binding AdminName}" HorizontalTextAlignment="Center" TextColor="Black"/>
+                        <Label Text="{Binding AdminBookBank}" HorizontalTextAlignment="Center"/>
+                    </StackLayout>
+                    <Image Source="Next" Grid.Column="1"/>
+                    <StackLayout Grid.Column="2">
+                        <Frame CornerRadius="50" BackgroundColor="White" Padding="0" Margin="0,10"
+                       HeightRequest="70" WidthRequest="70" HorizontalOptions="Center" Grid.Column="0">
+                            <Image Source="AccountOrange" Aspect="AspectFit" VerticalOptions="Center"
+                           HeightRequest="40" WidthRequest="40" HorizontalOptions="Center"/>
+                        </Frame>
+                        <Label Text="{Binding FirstName}" HorizontalTextAlignment="Center" TextColor="Black"/>
+                        <Label Text="{Binding BookBank}" HorizontalTextAlignment="Center"/>                        
+                    </StackLayout>
+                </Grid>
+                <Grid VerticalOptions="EndAndExpand">
+                    <Button BackgroundColor="LightGray" TextColor="White" Text="ยกเลิก" HorizontalOptions="FillAndExpand"
+                        CornerRadius="5" VerticalOptions="EndAndExpand" FontSize="22" Grid.Column="0"/>
+                    <Button BackgroundColor="#EAA200" TextColor="White" Text="ยืนยัน" HorizontalOptions="FillAndExpand"
+                        CornerRadius="5" VerticalOptions="EndAndExpand" FontSize="22" Grid.Column="1"
+                        Command="{Binding PushToTopUpSuccess}"/>
+                </Grid>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+    </pages:PopupPage>

@@ -12,6 +12,7 @@
         <bd:PinViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
+        <ScrollView>
         <StackLayout>
             <Grid Margin="0,30,0,0">
                 <Grid.RowDefinitions>
@@ -25,22 +26,29 @@
                     <Frame HasShadow="True" Margin="20,5" Padding="0">
                         <StackLayout>
                             <Label Text="ชื่อจริง" Margin="10" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
-                            <Entry Placeholder="tohot" Margin="50,0" HorizontalOptions="FillAndExpand" HeightRequest="40"
+                            <Entry Margin="50,0" HorizontalOptions="FillAndExpand" HeightRequest="40"
                                    Text="{Binding FirstName}"/>
                         </StackLayout>
                     </Frame>
                     <Frame HasShadow="True" Margin="20,5" Padding="0">
                         <StackLayout>
                             <Label Text="นามสกุล" Margin="10" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
-                            <Entry Placeholder="tohot" Margin="50,0" HorizontalOptions="FillAndExpand"
+                            <Entry Margin="50,0" HorizontalOptions="FillAndExpand"
                                    Text="{Binding LastName}" HeightRequest="40"/>
                         </StackLayout>
                     </Frame>
                     <Frame HasShadow="True" Margin="20,5" Padding="0">
                         <StackLayout>
                             <Label Text="วัน/เดือน/ปีเกิด" Margin="10" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
-                            <Entry Placeholder="tohot" Margin="50,0"
+                            <Entry Margin="50,0"
                                    Text="{Binding BirthDate}" HorizontalOptions="FillAndExpand" HeightRequest="40"/>
+                        </StackLayout>
+                    </Frame>
+                    <Frame HasShadow="True" Margin="20,5" Padding="0">
+                        <StackLayout>
+                            <Label Text="หมายเลขโทรศัพท์" Margin="10" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
+                            <Entry Margin="50,0"
+                                   Text="{Binding PhoneNo}" HorizontalOptions="FillAndExpand" HeightRequest="40"/>
                         </StackLayout>
                     </Frame>
                     <Frame HasShadow="True" Margin="20,5" Padding="0">
@@ -61,10 +69,12 @@
                         </StackLayout>
                     </Frame>
                 </StackLayout>
+                
             </Grid>
             <Button VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" FontSize="20" FontAttributes="Bold"
                             Margin="30,15" Text="ถัดไป" TextColor="White" BackgroundColor="#EAA200" CornerRadius="5"
                     Command="{Binding RegisterNextCommand}"/>
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

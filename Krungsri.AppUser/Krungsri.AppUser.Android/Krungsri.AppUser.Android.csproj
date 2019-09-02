@@ -71,11 +71,15 @@
     <PackageReference Include="Xamarin.Forms.InputKit">
       <Version>3.0.12</Version>
     </PackageReference>
+    <PackageReference Include="ZXing.Net.Mobile">
+      <Version>2.4.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="MyCustomDialogFragment.cs" />
     <Compile Include="MyEntryRenderer.cs" />
+    <Compile Include="QrScanning.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

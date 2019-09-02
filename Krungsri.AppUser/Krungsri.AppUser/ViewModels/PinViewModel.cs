@@ -38,6 +38,15 @@ namespace Krungsri.AppUser.ViewModels
             SetGenderM = new Command(SetGenderMen);
             SetGenderW = new Command(SetGenderWomen);
             RegisterNextCommand = new Command(RegisterNextButton);
+            PushToHomeTab = new Command(PushToHome);
+            //FogotPassNextButton = new Command();
+            //Email = Preferences.Get("otpemail", "");
+            //FirstName = Preferences.Get("FirstName", "");
+            //LastName = Preferences.Get("LastName", "");
+            //Gender = Preferences.Get("Gender", "");
+            //PhoneNo = Preferences.Get("PhoneNo", "");
+            //BirthDate = Preferences.Get("BirthDate", "");
+            //Password = Preferences.Get("Password", "");
         }
         public ICommand RegisterNextCommand { get; set; }
         public ICommand EnterNo0 { get; set; }
@@ -56,6 +65,8 @@ namespace Krungsri.AppUser.ViewModels
         public ICommand SignIn { get; set; }
         public ICommand SetGenderM { get; set; }
         public ICommand SetGenderW { get; set; }
+        public ICommand FogotPassNextButton { get; set; }
+        public ICommand PushToHomeTab { get; set; }
         //async Task Login()
         //{
         //    try
@@ -84,26 +95,93 @@ namespace Krungsri.AppUser.ViewModels
         //        InvalidString();
         //    }
         //}
+        public void PushToHome()
+        {
+            Application.Current.MainPage.Navigation.PushAsync(new MotherTabbed());
+        }
+        public void ForgotPassNext()
+        {
+            Preferences.Set("PinPush", "2");
+            Application.Current.MainPage.Navigation.PushAsync(new InputOtp(this));
+        }
         public async void SignInFunc()
         {
             Preferences.Set("PinPush", "1");
             await SendOtpEmail();
             await Application.Current.MainPage.Navigation.PushAsync(new InputOtp(this));
         }
+        private void SetZeroPinAndBackground()
+        {
+            CountPin = 0;
+            for (var i = 0; i < PinArr.Length; i++)
+            {
+                PinArr[i] = "";
+            }            
+            CircleBg1 = "#FFFFFF";
+            CircleBg2 = "#FFFFFF";
+            CircleBg3 = "#FFFFFF";
+            CircleBg4 = "#FFFFFF";
+            CircleBg5 = "#FFFFFF";
+            CircleBg6 = "#FFFFFF";            
+        }
         public async void PinPush()
         {
             var FormerPage = Preferences.Get("PinPush", "1");
-            if(FormerPage == "1")
+            if(FormerPage == "1")// from otp and first login
             {
                 await Application.Current.MainPage.Navigation.PushAsync(new Register());
             }
-            else if(FormerPage == "2")
+            else if(FormerPage == "2")//from register and forgot next button
             {
                 await Application.Current.MainPage.Navigation.PushAsync(new ConfirmCreatePassword());
             }
-            else if(FormerPage == "3")
+            else if(FormerPage == "3")// from 
             {
                 await Application.Current.MainPage.Navigation.PushAsync(new RegisterSuccess());
+            }
+        }
+        public async void ActionPin()
+        {
+            var FormerPage = Preferences.Get("PinPush", "1");
+            if (FormerPage == "1")
+            {
+                var otp = await SecureStorage.GetAsync("otp");
+                if (otp == ChangeArrToString())
+                {
+                    PinPush();
+                    SetZeroPinAndBackground();
+                }
+                else
+                {
+                    Vibration.Vibrate();
+                    ChangeInvalidColor();
+                    SetZeroPinAndBackground();
+                }
+            }
+            else if (FormerPage == "2")
+            {
+                Password = ChangeArrToString();
+                Preferences.Set("Password", Password);
+                PinPush();
+                Preferences.Set("PinPush", "3");
+                SetZeroPinAndBackground();
+
+            }
+            else if (FormerPage == "3")
+            {
+                RepeatPassword = ChangeArrToString();
+                if (RepeatPassword == Preferences.Get("Password", ""))
+                {
+                    PinPush();
+                    SetZeroPinAndBackground();
+                    await SignUp();
+                }
+                else
+                {
+                    Vibration.Vibrate();
+                    ChangeInvalidColor();
+                    SetZeroPinAndBackground();
+                }
             }
         }
         async Task SendOtpEmail()
@@ -128,25 +206,35 @@ namespace Krungsri.AppUser.ViewModels
             }
         }
         async Task SignUp()
-        {
+        {            
             try
             {
-                var validemail = IsValidEmail(Email);
-                var validpassword = PasswordSame(Password, RepeatPassword);
-                if (validemail == true && validpassword == true)
+                var objToApi = new
                 {
-                    string json = "{ Email: '" + Email + "', Password: '" + Password + "'}";
-                    var requestBody = new StringContent(json, Encoding.UTF8, "application/json");
+                    Email = Preferences.Get("otpemail", ""),
+                       // Email = Preferences.Get("Email", ""),
+                        Pin = Preferences.Get("Password", ""),
+                        Gender = Preferences.Get("Gender", ""),
+                        PhoneNumber = Preferences.Get("PhoneNo", ""),
+                        BirthDate = Preferences.Get("BirthDate", ""),
+                        FirstName = Preferences.Get("FirstName",""),
+                        LastName = Preferences.Get("LastName","")
+                    };                 
+                    
+                    //string json = "{ Email: '" + Email + "', Password: '" + Password + "'}";
+                    StringContent request = new StringContent($"{JsonConvert.SerializeObject(objToApi)}", Encoding.UTF8, "application/json");
                     var client = new HttpClient();
-                    HttpResponseMessage response = client.PostAsync("http://10.0.2.2:5000/api/user/registation", requestBody).Result;
+                    HttpResponseMessage response = await client.PostAsync("http://192.168.1.34:5000/api/auth/register", request);
                     //response.EnsureSuccessStatusCode();                    
-                    var responseBody = response.StatusCode.ToString();
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    RegisBalanceAndBookBank balanceAndBookBank = JsonConvert.DeserializeObject<RegisBalanceAndBookBank>(responseBody);
                     //SendEmailModel sendEmail = JsonConvert.DeserializeObject<SendEmailModel>(responseBody);
-                    if (responseBody == "OK")
+                    if (balanceAndBookBank != null)
                     {
-                        
-                    }
-                }
+                        Preferences.Set("Balance", balanceAndBookBank.Balance.ToString());
+                        Preferences.Set("BookBank", balanceAndBookBank.BookBank);
+                        Preferences.Set("UserId", balanceAndBookBank.UserId.ToString());
+                    }                
                 else
                 {
                     
@@ -202,41 +290,7 @@ namespace Krungsri.AppUser.ViewModels
             {
                 CircleBg6 = "#B8B8B8";
                 PinArr[5] = "1";
-                
-                var FormerPage = Preferences.Get("PinPush", "1");
-                if (FormerPage == "1")
-                {
-                    var otp = await SecureStorage.GetAsync("otp");
-                    if (otp == ChangeArrToString())
-                    {
-                        PinPush();
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
-                else if (FormerPage == "2")
-                {
-                    Password = ChangeArrToString();
-                    Preferences.Set("Password", Password);
-                    PinPush();
-                    Preferences.Set("PinPush", "3");
-                }
-                else if (FormerPage == "3")
-                {
-                    RepeatPassword = ChangeArrToString();
-                    if(RepeatPassword == Preferences.Get("Password", ""))
-                    {
-                        PinPush();
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }                
+                ActionPin();                                
             }
         }
         public async void EnterNumberTwo()
@@ -271,41 +325,7 @@ namespace Krungsri.AppUser.ViewModels
             {
                 CircleBg6 = "#B8B8B8";
                 PinArr[5] = "2";
-                var FormerPage = Preferences.Get("PinPush", "1");
-                if (FormerPage == "1")
-                {
-                    var otp = await SecureStorage.GetAsync("otp");
-                    if (otp == ChangeArrToString())
-                    {
-                        PinPush();
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
-                else if (FormerPage == "2")
-                {
-                    Password = ChangeArrToString();
-                    Preferences.Set("Password", Password);                    
-                    PinPush();
-                    Preferences.Set("PinPush", "3");
-                }
-                else if (FormerPage == "3")
-                {
-                    RepeatPassword = ChangeArrToString();
-                    if (RepeatPassword == Preferences.Get("Password", ""))
-                    {
-                        PinPush();
-
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
+                ActionPin();
             }
         }
         public async void EnterNumberThree()
@@ -340,41 +360,7 @@ namespace Krungsri.AppUser.ViewModels
             {
                 CircleBg6 = "#B8B8B8";
                 PinArr[5] = "3";
-                var FormerPage = Preferences.Get("PinPush", "1");
-                if (FormerPage == "1")
-                {
-                    var otp = await SecureStorage.GetAsync("otp");
-                    if (otp == ChangeArrToString())
-                    {
-                        PinPush();
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
-                else if (FormerPage == "2")
-                {
-                    Password = ChangeArrToString();
-                    Preferences.Set("Password", Password);
-                    PinPush();
-                    Preferences.Set("PinPush", "3");
-                }
-                else if (FormerPage == "3")
-                {
-                    RepeatPassword = ChangeArrToString();
-                    if (RepeatPassword == Preferences.Get("Password", ""))
-                    {
-                        PinPush();
-
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
+                ActionPin();
             }
         }
         public async void EnterNumberFour()
@@ -409,42 +395,7 @@ namespace Krungsri.AppUser.ViewModels
             {
                 CircleBg6 = "#B8B8B8";
                 PinArr[5] = "4";
-                var FormerPage = Preferences.Get("PinPush", "1");
-                if (FormerPage == "1")
-                {
-                    var otp = await SecureStorage.GetAsync("otp");
-                    if (otp == ChangeArrToString())
-                    {
-                        PinPush();
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
-                else if (FormerPage == "2")
-                {
-                    Password = ChangeArrToString();
-                    Preferences.Set("Password", Password);
-                    PinPush();
-                    Preferences.Set("PinPush", "3");
-
-                }
-                else if (FormerPage == "3")
-                {
-                    RepeatPassword = ChangeArrToString();
-                    if (RepeatPassword == Preferences.Get("Password", ""))
-                    {
-                        PinPush();
-
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
+                ActionPin();
             }
         }
         public async void EnterNumberFive()
@@ -479,43 +430,7 @@ namespace Krungsri.AppUser.ViewModels
             {
                 CircleBg6 = "#B8B8B8";
                 PinArr[5] = "5";
-                var FormerPage = Preferences.Get("PinPush", "1");
-                if (FormerPage == "1")
-                {
-                    var otp = await SecureStorage.GetAsync("otp");
-                    if (otp == ChangeArrToString())
-                    {
-                        PinPush();
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
-                else if (FormerPage == "2")
-                {
-                    Password = ChangeArrToString();
-                    Preferences.Set("Password", Password);
-
-                    PinPush();
-                    Preferences.Set("PinPush", "3");
-
-                }
-                else if (FormerPage == "3")
-                {
-                    RepeatPassword = ChangeArrToString();
-                    if (RepeatPassword == Preferences.Get("Password", ""))
-                    {
-                        PinPush();
-
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
+                ActionPin();
             }
         }
         public async void EnterNumberSix()
@@ -550,43 +465,7 @@ namespace Krungsri.AppUser.ViewModels
             {
                 CircleBg6 = "#B8B8B8";
                 PinArr[5] = "6";
-                var FormerPage = Preferences.Get("PinPush", "1");
-                if (FormerPage == "1")
-                {
-                    var otp = await SecureStorage.GetAsync("otp");
-                    if (otp == ChangeArrToString())
-                    {
-                        PinPush();
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
-                else if (FormerPage == "2")
-                {
-                    Password = ChangeArrToString();
-                    Preferences.Set("Password", Password);
-
-                    PinPush();
-                    Preferences.Set("PinPush", "3");
-
-                }
-                else if (FormerPage == "3")
-                {
-                    RepeatPassword = ChangeArrToString();
-                    if (RepeatPassword == Preferences.Get("Password", ""))
-                    {
-                        PinPush();
-
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
+                ActionPin();
             }
         }
         public async void EnterNumberSeven()
@@ -621,43 +500,7 @@ namespace Krungsri.AppUser.ViewModels
             {
                 CircleBg6 = "#B8B8B8";
                 PinArr[5] = "7";
-                var FormerPage = Preferences.Get("PinPush", "1");
-                if (FormerPage == "1")
-                {
-                    var otp = await SecureStorage.GetAsync("otp");
-                    if (otp == ChangeArrToString())
-                    {
-                        PinPush();
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
-                else if (FormerPage == "2")
-                {
-                    Password = ChangeArrToString();
-                    Preferences.Set("Password", Password);
-
-                    PinPush();
-                    Preferences.Set("PinPush", "3");
-
-                }
-                else if (FormerPage == "3")
-                {
-                    RepeatPassword = ChangeArrToString();
-                    if (RepeatPassword == Preferences.Get("Password", ""))
-                    {
-                        PinPush();
-
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
+                ActionPin();
             }
         }
         public async void EnterNumberEight()
@@ -692,42 +535,7 @@ namespace Krungsri.AppUser.ViewModels
             {
                 CircleBg6 = "#B8B8B8";
                 PinArr[5] = "8";
-                var FormerPage = Preferences.Get("PinPush", "1");
-                if (FormerPage == "1")
-                {
-                    var otp = await SecureStorage.GetAsync("otp");
-                    if (otp == ChangeArrToString())
-                    {
-                        PinPush();
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
-                else if (FormerPage == "2")
-                {
-                    Password = ChangeArrToString();
-                    Preferences.Set("Password", Password);
-                    PinPush();
-                    Preferences.Set("PinPush", "3");
-
-                }
-                else if (FormerPage == "3")
-                {
-                    RepeatPassword = ChangeArrToString();
-                    if (RepeatPassword == Preferences.Get("Password", ""))
-                    {
-                        PinPush();
-
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
+                ActionPin();
             }
         }
         public async void EnterNumberNine()
@@ -762,43 +570,7 @@ namespace Krungsri.AppUser.ViewModels
             {
                 CircleBg6 = "#B8B8B8";
                 PinArr[5] = "9";
-                var FormerPage = Preferences.Get("PinPush", "1");
-                if (FormerPage == "1")
-                {
-                    var otp = await SecureStorage.GetAsync("otp");
-                    if (otp == ChangeArrToString())
-                    {
-                        PinPush();
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
-                else if (FormerPage == "2")
-                {
-                    Password = ChangeArrToString();
-                    Preferences.Set("Password", Password);
-
-                    PinPush();
-                    Preferences.Set("PinPush", "3");
-
-                }
-                else if (FormerPage == "3")
-                {
-                    RepeatPassword = ChangeArrToString();
-                    if (RepeatPassword == Preferences.Get("Password", ""))
-                    {
-                        PinPush();
-
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
+                ActionPin();
             }
         }
         public async void EnterNumberZero()
@@ -833,40 +605,7 @@ namespace Krungsri.AppUser.ViewModels
             {
                 CircleBg6 = "#B8B8B8";
                 PinArr[5] = "0";
-                var FormerPage = Preferences.Get("PinPush", "1");
-                if (FormerPage == "1")
-                {
-                    var otp = await SecureStorage.GetAsync("otp");
-                    if (otp == ChangeArrToString())
-                    {                        
-                        PinPush();
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
-                else if (FormerPage == "2")
-                {
-                    Password = ChangeArrToString();
-                    Preferences.Set("Password", Password);
-                    PinPush();
-                    Preferences.Set("PinPush", "3");
-                }
-                else if (FormerPage == "3")
-                {
-                    RepeatPassword = ChangeArrToString();
-                    if (RepeatPassword == Preferences.Get("Password", ""))
-                    {
-                        PinPush();
-                    }
-                    else
-                    {
-                        Vibration.Vibrate();
-                        ChangeInvalidColor();
-                    }
-                }
+                ActionPin();
             }
         }
         public void DeleteNumberFunc()
@@ -1071,6 +810,7 @@ namespace Krungsri.AppUser.ViewModels
             Preferences.Set("PhoneNo", PhoneNo);
             Preferences.Set("Gender", Gender);
             Preferences.Set("PinPush", "2");
+            Preferences.Set("Email", EmailInPhone);
             Application.Current.MainPage.Navigation.PushAsync(new CreatePassword());
         }
 

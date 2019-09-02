@@ -11,12 +11,12 @@ using Xamarin.Forms.Xaml;
 namespace Krungsri.AppUser.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RegisterSuccess : ContentPage
+    public partial class TopUpPopup : Rg.Plugins.Popup.Pages.PopupPage
     {
-        public RegisterSuccess()
+        public TopUpPopup()
         {
             InitializeComponent();
-            BindingContext = new PinViewModel();
+            BindingContext = new MainAppViewModel();
         }
     }
 }
